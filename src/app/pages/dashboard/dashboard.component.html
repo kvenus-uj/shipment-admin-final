@@ -1,0 +1,29 @@
+<div *ngIf="!isAdmin" class="row" style="background-color: #9e9e9e; padding: 20px;">
+    <div class="col-md-3">
+        <a class="btn btn-outline-light" (click)="backAdmin()">Back to admin interface</a>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <p>ID : 651</p>
+    </div>
+    <div class="col-md-6">
+        <p>Client : Ozone srl</p>
+    </div>
+</div>
+<div class="fade-in">
+    <c-row>
+        <c-col col="12">
+            <app-shipment-analytics></app-shipment-analytics>
+        </c-col>
+    </c-row>
+    <c-row *ngIf="!isAdmin">
+        <c-col col="12">
+            <app-products-shipments></app-products-shipments>
+        </c-col>
+    </c-row>
+    <c-row>
+        <c-col col="12">
+            <app-shipments-chart></app-shipments-chart>
+        </c-col>
+    </c-row>
+</div>

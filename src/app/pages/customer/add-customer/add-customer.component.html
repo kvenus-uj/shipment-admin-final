@@ -1,0 +1,428 @@
+<div class="row justify-content-between custom-toolbar">
+  <div class="col align-self-end">
+    
+  </div>
+</div>
+<c-row>
+  <c-col lg="12">
+    <c-card class="card-toolbar">
+      <c-card-header>
+        {{"Create a new customer" | translate}}
+        <button cButton routerLink="/customer" color="primary" style="float: right;margin-right: 10px;">{{"Customer Dashboard" | translate}}</button>
+      </c-card-header>
+      <c-card-body>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    FirstName
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    LastName
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <c-row>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Company
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Siret
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    VAT number
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <label>Invoicing Address:</label>
+          </c-row>
+          <c-row>
+            <c-col col="12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Address
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="invAddr"
+                />
+              </div>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Post code
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="invPcode"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    City
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="invCity"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Country
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="invCountry"
+                />
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <label>Carrier returns Address:</label>
+          </c-row>
+          <c-row>
+            <c-col col="12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="carCheck" (change)="carCheckChange()">
+                <label for="check1" class="form-check-label">I want to use the same billing address.</label>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Address
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="carAddr"
+                />
+              </div>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Post code
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="carPcode"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    City
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="carCity"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Country
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="carCountry"
+                />
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <label>Recipient returns Address:</label>
+          </c-row>
+          <c-row>
+            <c-col col="12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="recCheck" (change)="recCheckChange()">
+                <label for="check2" class="form-check-label">I want to use the same billing address.</label>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Address
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="recAddr"
+                />
+              </div>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Post code
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="recPcode"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    City
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="recCity"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Country
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="recCountry"
+                />
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <label>Shipper returns Address:</label>
+          </c-row>
+          <c-row>
+            <c-col col="12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="shiCheck" (change)="shiCheckChange()">
+                <label for="check3" class="form-check-label">I want to use the same billing address.</label>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Address
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="shiAddr"
+                />
+              </div>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Post code
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="shiPcode"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    City
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="shiCity"
+                />
+              </div>
+            </c-col>
+            <c-col col="4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Country
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  [(ngModel)]="shiCountry"
+                />
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <c-col col="12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Phone number
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    E-mail
+                  </span>
+                </div>
+                <input cInput
+                  placeholder=""
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    Password
+                  </span>
+                </div>
+                <input cInput
+                  type="text" [(ngModel)]="genPass"
+                />
+                <div class="input-group-backend">
+                  <button cButton color="primary" class="px-4" (click)="genPassword()">Random password</button>
+                </div>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <c-col col="1">
+              <label>Active</label>
+            </c-col>
+            <c-col col="6">
+              <c-switch shape="square" variant="opposite" labelOn="Yes" labelOff="No" color="primary" checked class="mr-3"></c-switch>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="1">
+              <label>Newsletter</label>
+            </c-col>
+            <c-col col="6">
+              <c-switch shape="square" variant="opposite" labelOn="Yes" labelOff="No" color="primary" checked class="mr-3"></c-switch>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="1">
+              <label>Is guest</label>
+            </c-col>
+            <c-col col="6">
+              <c-switch shape="square" variant="opposite" labelOn="Yes" labelOff="No" color="primary" checked class="mr-3"></c-switch>
+            </c-col>
+          </c-row>
+          
+          <c-row>
+            <c-col col="1">
+              <label>Note</label>
+            </c-col>
+            <c-col col="11">
+              <textarea class="form-control" row="3"></textarea>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col col="6">
+              <button cButton color="light" class="px-4" [routerLink]="'/customer'">Cancel</button>
+            </c-col>
+            <c-col col="6" class="text-right">
+              <button cButton color="primary" class="px-4">Save</button>
+            </c-col>
+          </c-row>
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

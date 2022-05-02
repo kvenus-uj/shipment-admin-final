@@ -1,0 +1,536 @@
+<div class="fade-in">
+  <c-card style="max-width: 1100px;margin-left: auto;margin-right: auto;">
+    <c-card-header>
+      <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;{{"Team" | translate}}
+    </c-card-header>
+    <c-card-body>
+      <c-tabset boxed="true">
+        <c-tablist> 
+          <c-tab>
+            <i class="fa fa-fire"></i>&nbsp;&nbsp;{{"Employes" | translate}}
+          </c-tab>
+          <c-tab>
+            <i class="fa fa-trophy"></i>&nbsp;&nbsp;{{"Profiles" | translate}}
+          </c-tab>
+          <c-tab>
+            <i class="fa fa-eye"></i>&nbsp;&nbsp;{{"Permissions" | translate}}
+          </c-tab>
+        </c-tablist>
+        <c-tab-content>
+          <c-tab-pane>
+            <div>
+              <c-card class="card-toolbar">
+                <c-card-header>
+                  {{"Employes(3)" | translate}}
+                  <!-- <i class="cil-football" style="float: right;margin-right: 10px;"></i> -->
+                  <button cButton color="primary" (click)="updateTeam()" style="float: right;margin-right: 10px;">{{"Add an employe" | translate}}</button>
+                </c-card-header>
+                <c-card-body *ngIf="!updateShow">
+                  <table class="table table-responsive-sm table-sm">
+                    <colgroup>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                      <col class="column-3"/>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                      <col class="column-4"/>
+                      <col class="column-4"/>
+                      <col class="column-1"/>
+                      <col class="column-4"/>
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;vertical-align: top;">
+                          <input cInput type="checkbox"
+                            [(ngModel)]="allCheck" (change)="changeAllCheck()">
+                        </th>
+                        <th class="table-header-custom">{{"ID" | translate}}</th>
+                        <th class="table-header-custom">{{"First name" | translate}}</th>
+                        <th class="table-header-custom">{{"Last name" | translate}}</th>
+                        <th class="table-header-custom">{{"E-mail" | translate}}</th>
+                        <th class="table-header-custom">{{"Profile" | translate}}</th>
+                        <th class="table-header-custom">{{"Active" | translate}}</th>
+                        <th></th>
+                        <th class="table-header-custom">{{"Actions" | translate}}</th>
+                      </tr>
+                    </thead>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterId" class="form-control" />
+                        </th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterPronoun" class="form-control" />
+                        </th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterName" class="form-control" />
+                        </th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterEmail" class="form-control" />
+                        </th>
+                        <th>
+                          <select class="form-control" [(ngModel)]="filterProfile" id="exampleFormControlSelect1" style="font-size: small;">
+                            <option></option>
+                            <option>SuperAdmin</option>
+                            <option>Logistician</option>
+                            <option>Translator</option>
+                            <option>Seller</option>
+                          </select>
+                        </th>
+                        <th>
+                          <select class="form-control" [(ngModel)]="filterActive" id="exampleFormControlSelect1" style="font-size: small;">
+                            <option></option>
+                            <option>true</option>
+                            <option>false</option>
+                          </select>
+                        </th>
+                        <th></th>
+                        <th style="text-align: right;">
+                          <button type="button" (click)="reset()" class="btn btn-outline-secondary" 
+                          [ngClass]="{'reset-active':!(filterId==''&&filterPronoun==''&&filterName==''&&filterEmail==''&&filterProfile==''&&filterActive==''),
+                                      'reset-deactive':(filterId==''&&filterPronoun==''&&filterName==''&&filterEmail==''&&filterProfile==''&&filterActive=='')}">{{"Reset" | translate}}</button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                      <tr *ngFor="let orders of getFilteredData">
+                        <td><input cInput type="checkbox" [(ngModel)]="orders.checked"></td>
+                        <td style="text-align: left;">{{ orders.id }}</td>
+                        <td style="text-align: left;">{{ orders.pronoun }}</td>
+                        <td style="text-align: left;">{{ orders.name }}</td>
+                        <td style="text-align: left;">{{ orders.email }}</td>
+                        <td style="text-align: left;">{{ orders.profile }}</td>
+                        <td class="table-body-text">
+                          <i *ngIf="orders.active" class="cil-check-alt"></i>
+                          <i *ngIf="!orders.active" class="cil-x"></i>
+                        </td>
+                        <td style="text-align: center;"> <i cButton class="fa fa-edit" style="box-shadow: none;" (click)="updateTeam()"></i></td>
+                        <td style="text-align: right;">
+                          <button type="button" class="btn btn-outline-secondary btn-transparent" size="sm">...</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </c-card-body>
+                <c-card-body *ngIf="updateShow">
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-2 text-right">
+                        <label>First name:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="input-group mb-3">
+                        <input cInput
+                          placeholder=""
+                          autocomplete="username"
+                          required
+                        /></div>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-2 text-right">
+                        <label>Last name:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="input-group mb-3">
+                        <input cInput
+                          placeholder=""
+                          autocomplete="username"
+                          required
+                        /></div>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-2 text-right">
+                        <label>Address-Email:</label>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="input-group mb-3">
+                        <input cInput
+                          placeholder=""
+                          autocomplete="username"
+                          required
+                        /></div>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-2 text-right">
+                        <label>Password:</label>
+                      </div>
+                      <div class="col-md-8" *ngIf="showpass">
+                        <button cButton color="light" class="px-4" (click)="passShow()">Change the password</button>
+                      </div>
+                      <div class="col-md-8" *ngIf="!showpass">
+                        <c-card>
+                          <c-card-body>
+                            <div class="row">
+                              <div class="col-md-3 text-right">
+                                Current Password:
+                              </div>
+                              <div class="col-md-9">
+                                <input cInput />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3 text-right">
+                                New Password:
+                              </div>
+                              <div class="col-md-9">
+                                <input cInput type="password" [(ngModel)]="teamNewPass" />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3 text-right">
+                                Confirm Password:
+                              </div>
+                              <div class="col-md-9">
+                                <input cInput type="password" [(ngModel)]="teamConfirmPass" />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3 text-right">
+                                
+                              </div>
+                              <div class="col-md-5">
+                                <input cInput [(ngModel)]="teamPass" />
+                              </div>
+                              <div class="col-md-4">
+                                <button cButton color="light" class="px-4" (click)="genPassword()">Generate password</button>
+                              </div>
+                            </div>
+                            <c-row style="margin-top: 20px;">
+                              <c-col col="6">
+                                <button cButton color="light" class="px-4" (click)="passHide()">Cancel</button>
+                              </c-col>
+                              <c-col col="6" class="text-right">
+                                <button cButton color="primary" class="px-4" (click)="passHide()">Save</button>
+                              </c-col>
+                            </c-row>
+                          </c-card-body>
+                        </c-card>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <c-row>
+                      <c-col col="6">
+                        <button cButton color="light" class="px-4" (click)="returnEmploy()">Cancel</button>
+                      </c-col>
+                      <c-col col="6" class="text-right">
+                        <button cButton color="primary" class="px-4" (click)="returnEmploy()">Save</button>
+                      </c-col>
+                    </c-row>
+                </c-card-body>
+                
+              </c-card>
+            </div>
+          </c-tab-pane>
+          <c-tab-pane>
+            <div *ngIf="!updateProfileShow">
+              <c-card class="card-toolbar">
+                <c-card-header>
+                  {{"Profiles(4)" | translate}}
+                  <!-- <i class="cil-football" style="float: right;margin-right: 10px;"></i> -->
+                  <button cButton color="primary" (click)="updateProfile()" style="float: right;margin-right: 10px;">{{"Add a profile" | translate}}</button>
+                </c-card-header>
+                <c-card-body>
+                  <table class="table table-responsive-sm table-sm">
+                    <colgroup>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                      <col class="column-1"/>
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;vertical-align: top;">
+                          <input cInput type="checkbox"
+                            [(ngModel)]="allCheck" (change)="changeAllCheck()">
+                        </th>
+                        <th class="table-header-custom">{{"ID" | translate}}</th>
+                        <th class="table-header-custom">{{"Name" | translate}}</th>
+                        <th></th>
+                        <th class="table-header-custom">{{"Actions" | translate}}</th>
+                      </tr>
+                    </thead>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterId" class="form-control" />
+                        </th>
+                        <th>
+                          <input type="text" [(ngModel)]="filterName" class="form-control" />
+                        </th>
+                        <th></th>
+                        <th style="text-align: right;">
+                          <button type="button" (click)="reset()" class="btn btn-outline-secondary" 
+                          [ngClass]="{'reset-active':!(filterId==''&&filterPronoun==''&&filterName==''&&filterEmail==''&&filterProfile==''&&filterActive==''),
+                                      'reset-deactive':(filterId==''&&filterPronoun==''&&filterName==''&&filterEmail==''&&filterProfile==''&&filterActive=='')}">{{"Reset" | translate}}</button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                      <tr *ngFor="let orders of getFilteredData">
+                        <td><input cInput type="checkbox" [(ngModel)]="orders.checked"></td>
+                        <td style="text-align: left;">{{ orders.id }}</td>
+                        <td style="text-align: left;">{{ orders.name }}</td>
+                        <td style="text-align: center;"> <i cButton class="fa fa-edit" style="box-shadow: none;" (click)="updateProfile()"></i></td>
+                        <td style="text-align: right;">
+                          <button type="button" class="btn btn-outline-secondary btn-transparent" size="sm">...</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </c-card-body>
+              </c-card>
+            </div>
+            <div *ngIf="updateProfileShow">
+              <c-card class="card-toolbar">
+                <c-card-header>
+                  {{"Profile" | translate}}
+                </c-card-header>
+                <c-card-body>
+                  <c-row>
+                    <c-col col="3" class="text-right">
+                      Name:
+                    </c-col>
+                    <c-col col="6">
+                      <input cInput [(ngModel)]="customerProfile" />
+                    </c-col>
+                    <c-col col="3">
+                      <select class="form-control" [(ngModel)]="customerProfile" style="font-size: small;">
+                        <option></option>
+                        <option>SuperAdmin</option>
+                        <option>Logistician</option>
+                        <option>Translator</option>
+                        <option>Seller</option>
+                      </select>
+                    </c-col>
+                  </c-row>
+                  <c-row style="margin-top: 20px;">
+                    <c-col col="6">
+                      <button cButton color="light" class="px-4" (click)="returnProfile()">Cancel</button>
+                    </c-col>
+                    <c-col col="6" class="text-right">
+                      <button cButton color="primary" class="px-4" (click)="returnProfile()">Save</button>
+                    </c-col>
+                  </c-row>
+                </c-card-body>
+              </c-card>
+            </div>
+          </c-tab-pane>
+          <c-tab-pane>
+            <div>
+              <c-row>
+                <c-col col="3">
+                  <c-button-group vertical aria-label="Vertical button group radio toggle">
+                    <button cButton color="light">SuperAdmin</button>
+                    <button cButton (click)="showL()" color="light" >Logistician</button>
+                    <button cButton (click)="showT()" color="light">Translator</button>
+                    <button cButton (click)="showS()" color="light">Seller</button>
+                  </c-button-group>        
+                </c-col>
+                <c-col col="9">
+                  <div *ngIf="lShow">
+                    <c-card class="card-toolbar">
+                      <c-card-header>
+                        {{"Logistician" | translate}}
+                      </c-card-header>
+                      <c-card-body>
+                        <table class="table table-responsive-sm table-sm">
+                          <colgroup>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-3"/>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                            <col class="column-4"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAttachL" (change)="changeAllCheckAttach('login')">
+                                <label cLabel>Attach</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAddL" (change)="changeAllCheckAdd('login')">
+                                <label cLabel>Add</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckModifyL" (change)="changeAllCheckModify('login')">
+                                <label cLabel>Modify</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckDeleteL" (change)="changeAllCheckDelete('login')">
+                                <label cLabel>Delete</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckL" (change)="changeAllCheck2('login')">
+                                <label cLabel>All</label>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody style="text-align: center;">
+                            <tr *ngFor="let orders of getPLogin ; let i = index">
+                              <td style="text-align: left;">{{ orders.name }}</td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.add"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.modify"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.delete"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach && orders.add && orders.modify && orders.delete" (change)="changeAllCheckColmn(i,'login',$event)"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </c-card-body>
+                    </c-card>
+                  </div>
+                  <div *ngIf="tShow">
+                    <c-card class="card-toolbar">
+                      <c-card-header>
+                        {{"Translator" | translate}}
+                      </c-card-header>
+                      <c-card-body>
+                        <table class="table table-responsive-sm table-sm">
+                          <colgroup>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-3"/>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                            <col class="column-4"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAttachT" (change)="changeAllCheckAttach('translator')">
+                                <label cLabel>Attach</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAddT" (change)="changeAllCheckAdd('translator')">
+                                <label cLabel>Add</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckModifyT" (change)="changeAllCheckModify('translator')">
+                                <label cLabel>Modify</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckDeleteT" (change)="changeAllCheckDelete('translator')">
+                                <label cLabel>Delete</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckT" (change)="changeAllCheck2('translator')">
+                                <label cLabel>All</label>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody style="text-align: center;">
+                            <tr *ngFor="let orders of getPTranslator; let i = index;">
+                              <td style="text-align: left;">{{ orders.name }}</td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.add"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.modify"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.delete"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach && orders.add && orders.modify && orders.delete" (change)="changeAllCheckColmn(i,'translator',$event)"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </c-card-body>
+                    </c-card>
+                  </div>
+                  <div *ngIf="sShow">
+                    <c-card class="card-toolbar">
+                      <c-card-header>
+                        {{"Seller" | translate}}
+                      </c-card-header>
+                      <c-card-body>
+                        <table class="table table-responsive-sm table-sm">
+                          <colgroup>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-3"/>
+                            <col class="column-1"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                            <col class="column-4"/>
+                            <col class="column-1"/>
+                            <col class="column-4"/>
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAttachS" (change)="changeAllCheckAttach('seller')">
+                                <label cLabel>Attach</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckAddS" (change)="changeAllCheckAdd('seller')">
+                                <label cLabel>Add</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckModifyS" (change)="changeAllCheckModify('seller')">
+                                <label cLabel>Modify</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckDeleteS" (change)="changeAllCheckDelete('seller')">
+                                <label cLabel>Delete</label>
+                              </th>
+                              <th style="text-align: center;vertical-align: top;">
+                                <input cInput type="checkbox"
+                                  [(ngModel)]="allCheckS" (change)="changeAllCheck2('seller')">
+                                <label cLabel>All</label>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody style="text-align: center;">
+                            <tr *ngFor="let orders of getPSeller; let i = index;">
+                              <td style="text-align: left;">{{ orders.name }}</td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.add"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.modify"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.delete"></td>
+                              <td><input cInput type="checkbox" [(ngModel)]="orders.attach && orders.add && orders.modify && orders.delete" (change)="changeAllCheckColmn(i,'seller',$event)"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </c-card-body>
+                    </c-card>
+                  </div>
+                </c-col>
+              </c-row>
+            </div>
+          </c-tab-pane>
+        </c-tab-content>
+      </c-tabset>
+    </c-card-body>
+  </c-card>
+</div>

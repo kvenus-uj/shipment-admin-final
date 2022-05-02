@@ -1,0 +1,81 @@
+<div *ngIf="!isAdmin" class="row" style="background-color: #9e9e9e; padding: 20px;">
+  <div class="col-md-3">
+      <a class="btn btn-outline-light" (click)="backAdmin()">Back to admin interface</a>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-2">
+      <p>ID : 651</p>
+  </div>
+  <div class="col-md-6">
+      <p>Client : Ozone srl</p>
+  </div>
+</div>
+<c-row>
+  <c-col lg="12">
+    <c-card class="card-no-toolbar">
+      <c-card-header>
+        {{"INVOICES" | translate}}
+      </c-card-header>
+      <c-card-body>
+        <table class="table table-responsive-sm table-sm">
+          <colgroup>
+            <col class="column-1" />
+            <col class="column-1" />
+            <col *ngIf="isAdmin" class="column-1" />
+            <col class="column-1" />
+            <col class="column-1" />
+            <col class="column-1" />
+            <col class="column-1" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="table-header-custom">{{"NUMBER" | translate}}</th>
+              <th class="table-header-custom">{{"PERIOD" | translate}}</th>
+              <th *ngIf="isAdmin" class="table-header-custom">{{"CUSTOMER" | translate}}</th>
+              <th class="table-header-custom">{{"AMOUNT" | translate}}</th>
+              <th class="table-header-custom">{{"DUE DATE" | translate}}</th>
+              <th class="table-header-custom">{{"INVOICE" | translate}}</th>
+              <th class="table-header-custom">{{"DETAILS" | translate}}</th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterNumber" class="form-control" />
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterPeriod" class="form-control" />
+              </th>
+              <th *ngIf="isAdmin" scope="col">
+                <input type="text" [(ngModel)]="filterCustomer" class="form-control" />
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style="text-align: right;">
+                <!--button type="button" (click)="search()" class="btn btn-outline-secondary btn-transparent">Search</button-->
+                <button type="button" (click)="reset()" class="btn btn-outline-secondary" 
+                [ngClass]="{'reset-active':!(filterNumber==''&&filterPeriod==''&&filterCustomer==''),'reset-deactive':(filterNumber==''&&filterPeriod==''&&filterCustomer=='')}">{{"Reset" | translate}}</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody  style="text-align: center;">
+            <tr *ngFor="let invoice of getFilteredPageData">
+              <td class="table-body-text">{{ invoice.number }}</td>
+              <td class="table-body-text">{{ invoice.period }}</td>
+              <td *ngIf="isAdmin" class="table-body-text"><a (click)="customerPage()" routerLink="">{{ invoice.customer }}</a></td>
+              <td class="table-body-text">{{ invoice.amount }}</td>
+              <td class="table-body-text">{{ invoice.dueDate }}</td>
+              <td><i cButton class="fa fa-file-text"
+                  style="color: gray;box-shadow: none;"></i></td>
+              <td><i cButton class="fa fa-file-text"
+                  style="color: gray;box-shadow: none;"></i></td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination [totalItems]="getFilteredData.length" (pageChanged)="pageChanged($event)" [itemsPerPage]="page"
+          [(ngModel)]="currentPage" [maxSize]="4" [rotate]="true"></pagination>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

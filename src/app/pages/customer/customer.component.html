@@ -1,0 +1,169 @@
+
+<div class="row justify-content-between custom-toolbar">
+  <div class="col align-self-end">
+    <!-- <button routerLink="/orders/sendorders" cButton color="primary" style="float: right;margin-left:10px;">{{"Add" | translate}}</button>
+    <div class="nav-item dropdown" dropdown style="float: right;">
+      <button cButton color="dark" href dropdownToggle (click)="false" aria-controls="your-dropdown" style="margin-left:10px">{{"Import" | translate}}</button>
+      <div id="your-dropdown" class="dropdown-menu" aria-labelledby="your-dropdown" *dropdownMenu>
+        <a href="assets/data/orders-template.xlsx" download="orders-template.xlsx" class="dropdown-item">
+          {{"Get the template" | translate}}
+        </a>
+        <a cButton (click)="fileupload.click()" class="dropdown-item" style="box-shadow: none;">
+          <input [hidden]="true" #fileupload accept=".pdf" type="file" id="fileupload"
+            (change)="handleFileInput($event.target.files)">
+            {{"Import a file" | translate}}
+        </a>
+        <a routerLink="/apps" class="dropdown-item">
+          {{"Sync with API" | translate}}
+        </a>
+      </div>
+    </div> -->
+  </div>
+</div>
+<div class="row custom-toolbar">
+  
+</div>
+<c-row>
+  <c-col lg="12">
+    <c-card class="card-no-toolbar" style="min-width: fit-content;">
+      <c-card-header>
+        {{"Manage your customers" | translate}}
+        <button cButton routerLink="addcustomer" color="primary" style="float: right;margin-right: 10px;">{{"Add a customer" | translate}}</button>
+      </c-card-header>
+      <c-card-body>
+        <table class="table table-responsive-sm table-sm">
+          <colgroup>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-4"/>
+            <col class="column-3"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+            <col class="column-1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th style="text-align: center;vertical-align: top;">
+                <input cInput type="checkbox"
+                  [(ngModel)]="allCheck" (change)="changeAllCheck()">
+              </th>
+              <th class="table-header-custom">{{"ID" | translate}}</th>
+              <th class="table-header-custom">{{"Company" | translate}}</th>
+              <th class="table-header-custom">{{"Siret" | translate}}</th>
+              <th class="table-header-custom">{{"VAT number" | translate}}</th>
+              <th class="table-header-custom">{{"Email Address" | translate}}</th>
+              <th class="table-header-custom">{{"Active" | translate}}</th>
+              <th class="table-header-custom">{{"Newsletter" | translate}}</th>
+              <th class="table-header-custom">{{"Country" | translate}}</th>
+              <th class="table-header-custom">{{"Inscriptoin" | translate}}</th>
+              <th class="table-header-custom">{{"Date of last visit" | translate}}</th>
+              <th class="table-header-custom"></th>
+              <th class="table-header-custom">{{"Actions" | translate}}</th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th></th>
+              <th>
+                <input type="text" [(ngModel)]="filterId" class="form-control" />
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterCompany" class="form-control" />
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterSiret" class="form-control" />
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterVatnumber" class="form-control" />
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterEmail" class="form-control" />
+              </th>
+              <th>
+                <select class="form-control" [(ngModel)]="filterActive" id="exampleFormControlSelect1" style="font-size: small;">
+                  <option></option>
+                  <option>True</option>
+                  <option>False</option>
+                </select>
+              </th>
+              <th>
+                <select class="form-control" [(ngModel)]="filterNewsletter" id="exampleFormControlSelect2" style="font-size: small;">
+                  <option></option>
+                  <option>True</option>
+                  <option>False</option>
+                </select>
+              </th>
+              <th scope="col">
+                <input type="text" [(ngModel)]="filterCountry" class="form-control" />
+              </th>
+              <th>
+                <input cInput placeholder="Date" #drp="bsDaterangepicker" bsDaterangepicker
+                  [(ngModel)]="filterInscription" style="font-size: 0.7em;">
+              </th>
+              <th>
+                <input cInput placeholder="Date" #drp="bsDaterangepicker" bsDaterangepicker
+                  [(ngModel)]="filterDateoflastvist" style="font-size: 0.7em;">
+              </th>
+              <th></th>
+              <th style="text-align: right;">
+                <button type="button" (click)="reset()" class="btn btn-outline-secondary" 
+                [ngClass]="{'reset-active':!(filterId==''&&filterCompany==''&&filterSiret==''&&filterVatnumber==''&&filterEmail==''&&filterActive==''&&filterNewsletter==''&&filterNewsletter==''&&filterCountry==''&&filterInscription==''&&filterDateoflastvist==''),
+                            'reset-deactive':(filterId==''&&filterCompany==''&&filterSiret==''&&filterVatnumber==''&&filterEmail==''&&filterActive==''&&filterNewsletter==''&&filterNewsletter==''&&filterCountry==''&&filterInscription==''&&filterDateoflastvist=='')}">{{"Reset" | translate}}</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody style="text-align: center;">
+            <tr *ngFor="let orders of getFilteredPageData">
+              <td><input cInput type="checkbox" [(ngModel)]="orders.checked"></td>
+              <td class="table-body-text">{{ orders.id }}</td>
+              <td class="table-body-text">{{ orders.company }}</td>
+              <td class="table-body-text">{{ orders.siret }}</td>
+              <td class="table-body-text">{{ orders.vat_number }}</td>
+              <td class="table-body-text">{{ orders.email_address }}</td>
+              <td style="text-align: center;">
+                <i *ngIf="orders.active" class="cil-check-alt"></i>
+                <i *ngIf="!orders.active" class="cil-x"></i>
+              </td>
+              <td style="text-align: center;">
+                <i *ngIf="orders.newsletter" class="cil-check-alt"></i>
+                <i *ngIf="!orders.newsletter" class="cil-x"></i>
+              </td>
+              <td class="table-body-text">{{ orders.country }}</td>
+              <td class="table-body-text">{{ orders.inscription }}</td>
+              <td class="table-body-text">{{ orders.dateoflastvist }}</td>
+              <td style="text-align: center;"> <i cButton class="fa fa-edit" style="box-shadow: none;" routerLink="updatecustomer"></i> {{orders.options }}</td>
+              <td style="text-align: right;">
+                <div class="nav-item dropdown" dropdown>
+                  <button type="button" class="btn btn-outline-secondary btn-transparent" size="sm" href dropdownToggle (click)="false"
+                    aria-controls="your-dropdown" id="link-dropdown">...</button>
+                  <div id="your-dropdown" class="dropdown-menu" aria-labelledby="link-dropdown" *dropdownMenu>
+                    <a class="dropdown-item" (click)="customerPage()">
+                      {{"Customer Interface" | translate}}
+                    </a>
+                    <!-- <a cButton (click)="showMoreDetails(orders)" class="dropdown-item" style="box-shadow: none;">
+                      {{"Show more details" | translate}}
+                    </a>
+                    <a href="https://track.cubyn.com/CUB254229128?lang=en" class="dropdown-item">
+                      {{"Track parcel" | translate}}
+                    </a>
+                    <a routerLink="/orders/showdetails" class="dropdown-item">
+                      {{"Report an incident" | translate}}
+                    </a> -->
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination [totalItems]="getFilteredData.length" (pageChanged)="pageChanged($event)" [itemsPerPage]="page"
+          [(ngModel)]="currentPage" [maxSize]="4" [rotate]="true"></pagination>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
