@@ -31,7 +31,6 @@ import { PaymentsComponent } from './payments/payments.component';
 import { ReturnComponent } from './return/return.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 import { WarrantyComponent } from './warranty/warranty.component';
-import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
 
 import {TranslateLoader, TranslateModule, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import { Http } from '@angular/http';
@@ -69,7 +68,6 @@ export const routes = [
     ListGroupModule,
     TogglerModule,
     NavModule,
-    PdfViewerModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
