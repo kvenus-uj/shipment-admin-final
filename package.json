@@ -45,7 +45,7 @@
     "@angular/router": "^9.1.12",
     "@coreui/angular": "^3.0.0-alpha.7",
     "@coreui/chartjs": "^2.0.0",
-    "@coreui/coreui-pro": "3.2.2",
+    "@coreui/coreui-pro": "3.4.2",
     "@coreui/icons": "^2.0.0-beta.5",
     "@coreui/icons-angular": "^1.0.0-alpha.1",
     "@coreui/utils": "^1.3.1",
