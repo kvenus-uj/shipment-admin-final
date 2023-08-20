@@ -61,7 +61,7 @@
     "classnames": "^2.2.6",
     "core-js": "^3.6.5",
     "date-fns": "^1.30.1",
-    "firebase": "^7.0 || ^8.0",
+    "firebase": "^10.2.0",
     "jquery": "^3.5.1",
     "jsbarcode": "^3.11.3",
     "moment": "^2.27.0",
