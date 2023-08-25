@@ -80,7 +80,7 @@
     "ngx-tippy-wrapper": "^2.0.0",
     "ngx-toastr": "^12.1.0",
     "pdfjs-dist": "^2.4.456",
-    "pdfmake": "^0.1.68",
+    "pdfmake": "^0.2.7",
     "quill": "^1.3.7",
     "rxjs": "^6.6.0",
     "rxjs-compat": "^6.6.0",
